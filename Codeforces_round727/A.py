@@ -23,13 +23,16 @@ def func(n, x, t):
         start_time.append(x*i)
         finish_time.append(x*i + t)
     dis = 0    
+    count = 0
     for i in range(len(start_time)):
-         arr = [x for x in start_time[(i+1):] if x <= finish_time[i]]
-         dis += len(arr)
+        count +=1
+        print('{}/{}'.format(count, len(start_time)))
+        arr = [x for x in start_time[(i+1):] if x <= finish_time[i]]
+        dis += len(arr)
         
     return dis
 
-a = func(2000000000, 1, 2000000000)
+a = func(2000000000, 1, 1999999998)
 
 
 def main():
