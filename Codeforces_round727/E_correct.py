@@ -5,10 +5,9 @@ Created on Wed Jun 23 07:38:54 2021
 
 @author: hienpham
 """
-import os
-import math
 import sys
 
+sys.setrecursionlimit(10**6)
 
 parse_input = lambda: sys.stdin.readline().rstrip("\r\n")
 
@@ -57,12 +56,12 @@ def func(n_cases, m, k_arr, left, right, left_hand=0, right_hand=0):
     i = 0
     arr = [None]*n_cases
     while i < n_cases:
+        
         if k_arr[i] > m:
             return 'No', None
 
         c = check_k(k_arr, left, right, i)
         l, r = check_hand(left_hand, right_hand, left, right, i)
-        
         
         if c == 3:
             return 'No', None
@@ -75,9 +74,12 @@ def func(n_cases, m, k_arr, left, right, left_hand=0, right_hand=0):
                 i += 1
             elif r == 1 :
                 if i > 0:
-                    left_array.remove(k_arr[i-1])
                     i -= 1
-                    left_hand = left_array.pop()
+                    if len(left_array) > 2:
+                        left_array.pop()
+                        left_hand = left_array.pop()
+                    else:
+                        left_hand = left_array[0]
                     left_false = True
                 else:
                     return 'No', None
@@ -90,9 +92,12 @@ def func(n_cases, m, k_arr, left, right, left_hand=0, right_hand=0):
                 i +=1
             elif l == 1:
                 if i > 0:
-                    right_array.remove(k_arr[i-1])
                     i -= 1
-                    right_hand = right_array.pop()
+                    if len(right_array) > 2:
+                        right_array.pop()
+                        right_hand = right_array.pop()
+                    else:
+                        right_hand = right_array[0]
                     left_false = True
                 else:
                     return 'No', None
@@ -102,22 +107,34 @@ def func(n_cases, m, k_arr, left, right, left_hand=0, right_hand=0):
                 right_hand = k_arr[i]
                 right_array.append(right_hand)
                 arr[i] = 1
+                i += 1
+                
             else:
-                left_hand = k_arr[i]
-                left_array.append(left_hand)
-                arr[i] = 0
+                if r == 0:
+                    left_hand = k_arr[i]
+                    left_array.append(left_hand)
+                    arr[i] = 0
+                    i += 1
+                elif r == 1 and l == 0:
+                    right_hand = k_arr[i]
+                    right_array.append(right_hand)
+                    arr[i] = 1
+                    i +=1
+                elif r == 1 and l == 1:
+                    return 'No', None
+                
             left_false = False
-            i += 1
+            
     
     if arr[n_cases - 1] != None:
         return 'Yes', arr
 
 
-n_cases, m = 2, 10
-k_arr = [3, 2]
-left = [[0, 3], [0, 4]]
-right = [[0, 2], [0, 2]]
-ans, arr = func(n_cases, m, k_arr, left, right)
+#n_cases, m = 2, 1000
+#k_arr = [2, 3]
+#left = [[0, 10], [3, 3]]
+#right = [[1, 99], [3, 5]]
+#ans, arr = func(n_cases, m, k_arr, left, right)
 
 
 def main():
@@ -133,7 +150,8 @@ def main():
         k_arr.append(k)
         left.append([a_l, b_l])
         right.append([a_r, b_r])
-    left_hand, right_hand = 0, 0    
+        
+ 
     ans, arr = func(n_cases, m, k_arr, left, right)
     if ans == 'Yes':
         print(ans)
