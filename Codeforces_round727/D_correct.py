@@ -40,14 +40,7 @@ def func(n_cases, shop_list, total_items):
                 n_items += buy_more
                 
                 shop_list[j][1] -= buy_more 
-                """
-                n_item_disc = n_buy - buy_more
-                
-                total_pay += 1*n_item_disc
-                n_items += n_item_disc
-                
-                j -= 1
-                """
+
             else:
                 total_pay += 2*n_buy
                 n_items += n_buy
