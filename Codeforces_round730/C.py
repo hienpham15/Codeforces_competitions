@@ -67,16 +67,18 @@ class dp:
         return ans
         
 
-c, m, p, v = 0.4998, 0.4998, 0.0004, 0.1666
-scale = 10**6
-c, m, p, v = round(c*scale), round(m*scale), round(p*scale), round(v*scale)
-ans = dp().expected_Race(c, m, p, v)
+#c, m, p, v = 0.4998, 0.4998, 0.0004, 0.1666
+#scale = 10**6
+#c, m, p, v = round(c*scale), round(m*scale), round(p*scale), round(v*scale)
+#ans = dp().expected_Race(c, m, p, v)
 
 def main():
     n_cases = int(parse_input())
     for i in range(n_cases):
-        c, m, p, v = [int(i) for i in parse_input().split()]
-        print(dp().func(c, m, p, v))
+        c, m, p, v = [float(i) for i in parse_input().split()]
+        scale = 10**6
+        c, m, p, v = round(c*scale), round(m*scale), round(p*scale), round(v*scale)
+        print(dp().expected_Race(c, m, p, v))
         
 if __name__ == "__main__":
     main()
