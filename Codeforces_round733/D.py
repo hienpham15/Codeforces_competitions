@@ -31,12 +31,18 @@ def func(n, wishes):
     for wish in bag:
         gifts = bag[wish]
         if len(gifts) > 1:
-            available += gifts[1:]
-            bag[wish] = [gifts[0]]
+            available += gifts
+            bag[wish] = []
             
     for i in range(n):
-        if i+1 not in bag:
-            bag[i+1] = [available.pop()]
+        if i+1 not in bag or not bag[i+1]:
+            val = available.pop()
+            
+            if i+1 == val:
+                available.insert(0, val)
+                val = available.pop()
+            
+            bag[i+1] = [val]
     
     for key, values in bag.items():
         
