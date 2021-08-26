@@ -56,15 +56,40 @@ def dp(num, d):
                     dp(new_num, d)
                 else:
                     return
-                
+
+
+def bottomUp(num, prev_num, d):
+    for i in range(len(num)):
+        check_num = prev_num + num[i]
+        #new_num = num[:i] + num[i+1:]
+       
+        if notPrime(int(check_num)):
+            d.update({len(check_num):int(check_num)})
+            return 
+        #else:
+        #    bottomUp(new_num, prev_num, d)
+         
+    for i in range(len(num)):
+        prev_num += num[i]
+        new_num = num[:i] + num[i+1:]
+        bottomUp(new_num, prev_num, d)
+        
+        if d:
+            return
+            
+
          
 def func(k, n):
     n_str = str(n)
     d = {}
-    if notPrime(n):
-        d[k] = n
-    dp(n_str, d)
-    key = list(d.keys())[-1]
+    
+    #if notPrime(n):
+    #    d[k] = n
+    #dp(n_str, d)
+    #key = list(d.keys())[-1]
+    
+    bottomUp(n_str, '', d)
+    key = list(d.keys())[0]
     return key, d[key]
 
 #k = 30
