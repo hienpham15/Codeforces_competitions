@@ -21,14 +21,16 @@ def func(n, string):
     if len(string) < 2:
         return -1, -1
     
-    for l in range(n-1):
-        for r in range(l+1, n):
-            sub = string[l:r+1]
-            c = Counter(sub)
-            if c['a'] == c['b']:
-                return l, r
-    return -1, -1
-
+    l1 = string.find('ab')
+    if l1 == -1:
+        l2 = string.find('ba')
+        if l2 == -1:
+            return -1, -1
+        else:
+            return l2, l2 + 1
+    else:
+        return l1, l1 + 1
+    
 #n = 1
 #s = 'a'
 #l, r = func(n, s)
